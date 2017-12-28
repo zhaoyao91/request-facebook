@@ -15,6 +15,7 @@ const requestFacebook = require('request-facebook')
 
 await data = requestFacebook({
   accessToken: accessToken,
+  apiVersion: 'v2.11'
   path: `${adId}`,
   query: {
     fields: 'name,status'
@@ -31,7 +32,7 @@ await data = requestFacebook({
 
 - options: `Object`
   - baseUrl?: `String` = https://graph.facebook.com
-  - apiVersion?: `String` = v2.10
+  - apiVersion: `String`
   - method?: `String` = GET
   - accessToken: `String`
   - path: `String`

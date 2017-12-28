@@ -4,7 +4,6 @@ const joinUrl = require('url-join')
 
 const defaultOptions = {
   baseUrl: 'https://graph.facebook.com',
-  apiVersion: 'v2.10',
   method: 'GET',
 }
 
