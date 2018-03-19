@@ -25,10 +25,16 @@ module.exports = async function requestFacebook (options) {
     method,
     body: buildBody(body)
   })
+  
   if (!response.ok) {
     const error = new Error('failed to request facebook')
-    response.body = await response.text()
-    error.response = response
+    error.response = {
+      ...response,
+      ok: response.ok,
+      status: response.status,
+      statusText: response.statusText,
+      body: await response.text()
+    }
     throw error
   }
 
