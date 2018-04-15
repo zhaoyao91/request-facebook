@@ -18,12 +18,12 @@ module.exports = async function requestFacebook (options) {
     access_token: accessToken,
     ...query,
   }
-  const queryString = '?' + qs.stringify(queryObject)
+  const queryString = '?' + buildParams(queryObject)
   const url = joinUrl(baseUrl, apiVersion, path, queryString)
 
   const response = await fetch(url, {
     method,
-    body: buildBody(body)
+    body: buildParams(body)
   })
 
   if (!response.ok) {
@@ -49,13 +49,27 @@ module.exports = async function requestFacebook (options) {
   return await response.json()
 }
 
-function buildBody (params) {
-  if (typeof params === 'object' && params !== null) {
+/**
+ * facebook graph api params could be an object
+ * but for http transferring, the first level of fields should be query string format
+ * and the deeper fields should be JSON string
+ *
+ * @param {object | string} [params]
+ * @return {string}
+ */
+function buildParams (params) {
+  if (params === undefined) return params
+  else if (typeof params === 'string') return params
+  else if (typeof params === 'object' && params !== null) {
     const body = {}
     Object.keys(params).forEach(key => {
-      body[key] = typeof params[key] === 'string' ? params[key] : JSON.stringify(params[key])
+      body[key] = typeof params[key] === 'string'
+        ? params[key]
+        : JSON.stringify(params[key])
     })
     return qs.stringify(body)
   }
-  else return params
+  else {
+    throw new TypeError('params could only be string or object')
+  }
 }

@@ -36,7 +36,7 @@ await data = requestFacebook({
   - method?: `String` = GET
   - accessToken: `String`
   - path: `String`
-  - query?: `Object`
+  - query?: `String | Object`
   - body?: `String | Object`
 
 ## References:

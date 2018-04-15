@@ -1,6 +1,6 @@
 {
   "name": "request-facebook",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "request facebook",
   "main": "index.js",
   "keywords": [
