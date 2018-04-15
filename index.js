@@ -12,19 +12,25 @@ module.exports = async function requestFacebook (options) {
     query,
     accessToken,
     body,
+    page
   } = clean(options)
+  let response
 
-  const queryObject = {
-    access_token: accessToken,
-    ...query,
+  if (page) {
+    response = await fetch(page)
+  } else {
+    const queryObject = {
+      access_token: accessToken,
+      ...query,
+    }
+    const queryString = '?' + buildParams(queryObject)
+    const url = joinUrl(baseUrl, apiVersion, path, queryString)
+
+    response = await fetch(url, {
+      method,
+      body: buildParams(body)
+    })
   }
-  const queryString = '?' + buildParams(queryObject)
-  const url = joinUrl(baseUrl, apiVersion, path, queryString)
-
-  const response = await fetch(url, {
-    method,
-    body: buildParams(body)
-  })
 
   if (!response.ok) {
     const error = new Error('failed to request facebook')

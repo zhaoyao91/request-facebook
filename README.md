@@ -13,16 +13,21 @@ npm i request-facebook
 ```
 const requestFacebook = require('request-facebook')
 
-await data = requestFacebook({
+const firstPage = await requestFacebook({
+  apiVersion: 'v2.12',
   accessToken: accessToken,
-  apiVersion: 'v2.12'
-  path: `${adId}`,
+  path: `${adId}/insights`,
   query: {
-    fields: 'name,status'
+    date_preset: 'lifetime',
+    time_increment: 1,
+    fields: 'spend,impressions'
   }
 })
-```
 
+const secondPage = await requestFacebook({
+  page: paging.next
+})
+```
 
 ## API
 
@@ -38,6 +43,9 @@ await data = requestFacebook({
   - path: `String`
   - query?: `Object`
   - body?: `String | Object`
+  - page?: `String` - page url
+
+Note: if `page` option is specified, all other options are ignored
 
 ## References:
 
