@@ -2,6 +2,10 @@
 
 Util function to help request facebook.
 
+## Deprecated
+
+Prefer the alternaltive [facebook-ad-tools](https://github.com/zhaoyao91/facebook-ad-tools).
+
 ## Installation
 
 ```
